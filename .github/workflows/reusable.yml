@@ -1,0 +1,14 @@
+name: Reusable Deploy
+on: workflow_call:
+  inputs:
+    environment:
+      description: 'Deployment environment'
+      required: true
+      type: string
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "Deplying to environment: ${{ github.event.inputs.environment }}"
