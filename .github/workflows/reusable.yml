@@ -34,4 +34,5 @@ jobs:
         run: |
           echo "Deplying to environment: ${{ github.event.inputs.environment }}"
       - name: Set Result Output
-        run: echo "result=Deployment completed successfully" >> $GITHUB_OUTPUT
+        id: set-result
+        run: echo "set-result=Deployment completed successfully" >> $GITHUB_OUTPUT
