@@ -1,9 +1,25 @@
 name: Reusable Deploy
-on: workflow_call
+on: 
+  workflow_call:  
+    inputs:
+      artifact-name:
+        description: 'Name of the artifact to download'
+        required: true
+        type: string
+        default : 'dist-files'
+      environment:
+        required: false
+        type: string
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Code
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ github.event.inputs.artifact-name }}
+      - name: List files
+        run: ls
       - name: Output information
         run: |
           echo "Deplying to environment: ${{ github.event.inputs.environment }}"
