@@ -72,6 +72,14 @@ jobs:
     with:
       artifact-name: dist-files
       environment: production
+    secrets:
+      MONGODB_CLUSTER_ADDRESS: ${{ secrets.MONGODB_CLUSTER_ADDRESS }}
+  print-deploy-result:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output deployment result
+        run: 'echo "Deployment result: ${{ needs.deploy.outputs.result }}"'
   report:
     needs: [lint, test, build, deploy]
     if: failure()

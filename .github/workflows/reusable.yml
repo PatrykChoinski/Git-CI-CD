@@ -10,8 +10,18 @@ on:
       environment:
         required: false
         type: string
+        default: 'production'
+    secrets:
+      MONGODB_CLUSTER_ADDRESS:
+        required: true
+    outputs:
+      result:
+        description: 'The result of the deployment'
+        value: ${{ jobs.deploy.outputs.outcome  }}
 jobs:
   deploy:
+    outputs:
+      outcome: ${{ steps.set-result.outputs.result }}
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -23,3 +33,5 @@ jobs:
       - name: Output information
         run: |
           echo "Deplying to environment: ${{ github.event.inputs.environment }}"
+      - name: Set Result Output
+        run: echo "result=Deployment completed successfully" >> $GITHUB_OUTPUT
